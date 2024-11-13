@@ -13,7 +13,7 @@ public:
 
     int getTotalLuggageWeight();
 
-private:
+public:
     const int maxWeightEconomySegment;
     const int maxWeightBusinessSegment;
     const int maxWeightFirstClassSegment;

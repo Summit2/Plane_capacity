@@ -23,7 +23,7 @@ class Plane{
         else if (typeOfPassenger == "PILOT") pilots.push_back(passenger);
 
         
-        
+
         //проверяем, в норме ли у пассажира ручная кладь и багаж
         if (passenger->canAddHandLuggage()==false || passenger->canAddLuggage()==false){
             return false;
@@ -44,14 +44,16 @@ class Plane{
             }
         }
         else if (typeOfPassenger == "BUSINESS"){
-             if (currentWeightBusinessSegment + passenger->getLuggageWeight()+passenger->getHandLuggageWeight() <= maxWeightBusinessSegment){
-                currentWeightBusinessSegment += (passenger->getLuggageWeight()+passenger->getHandLuggageWeight());
+            //ручную кладь оставляем в бизнес классе
+             currentWeightBusinessSegment += passenger->getHandLuggageWeight();
+
+             if (currentWeightBusinessSegment + passenger->getLuggageWeight() <= maxWeightBusinessSegment){
+                currentWeightBusinessSegment += passenger->getLuggageWeight();
                 passengersBusiness.push_back(passenger);
                 return true;
              }
              else {
-                //ручную кладь оставляем в бизнес классе
-                currentWeightBusinessSegment += passenger->getHandLuggageWeight();
+                
 
                 //если багаж не влезает, переносим его в эконом класс
                 if (passenger->getLuggageWeight() + currentWeightEconomySegment <= maxWeightEconomySegment){
@@ -72,8 +74,11 @@ class Plane{
         }
 
         else if (typeOfPassenger == "FIRST CLASS"){
-            if (currentWeightFirstClassSegment + passenger->getLuggageWeight()+passenger->getHandLuggageWeight() <= maxWeightFirstClassSegment){
-                currentWeightFirstClassSegment += (passenger->getLuggageWeight()+passenger->getHandLuggageWeight());
+            //добавляем его ручную кладь
+            currentWeightBusinessSegment += passenger->getHandLuggageWeight();
+
+            if (currentWeightFirstClassSegment + passenger->getLuggageWeight() <= maxWeightFirstClassSegment){
+                currentWeightFirstClassSegment += passenger->getLuggageWeight();
                 passengersFirstClass.push_back(passenger);
                 return true;
              }
@@ -93,7 +98,7 @@ class Plane{
     }
 
 
-    private:
+    public:
 
     const int maxWeightEconomySegment;
     const int maxWeightBusinessSegment;
