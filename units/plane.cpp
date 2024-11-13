@@ -4,23 +4,31 @@
 #include <memory>
 #include <string>
 #include <iostream>
-class Plane{
+#include <algorithm>
 
-    public:
+#define tes
 
-    Plane(int max_weigth_economy, int max_weight_business, int max_weight_firstclass ) :
-    maxWeightEconomySegment(max_weigth_economy), maxWeightBusinessSegment(max_weight_business),maxWeightFirstClassSegment(max_weight_firstclass),
-    currentWeightEconomySegment(0),currentWeightBusinessSegment(0),currentWeightFirstClassSegment(0)
-    {};
+Plane::Plane(int max_weight_economy, int max_weight_business, int max_weight_firstclass)
+    : maxWeightEconomySegment(max_weight_economy),
+      maxWeightBusinessSegment(max_weight_business),
+      maxWeightFirstClassSegment(max_weight_firstclass),
+      currentWeightEconomySegment(0),
+      currentWeightBusinessSegment(0),
+      currentWeightFirstClassSegment(0) {}
 
-
-    bool addPassenger(std::shared_ptr<Unit> passenger ){
+bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
 
         std::string typeOfPassenger = passenger->getType();
+
+        #ifdef test
+        std::cout <<std::endl<< "Тип пассажира "<<typeOfPassenger<<std::endl;
+        #endif
         
         // с пилотами и бортпроводниками все просто
-        if (typeOfPassenger == "FLIGHT ATTENDANT") flightAttendants.push_back(passenger);
-        else if (typeOfPassenger == "PILOT") pilots.push_back(passenger);
+        if (typeOfPassenger == "FLIGHT ATTENDANT" || typeOfPassenger == "PILOT") {
+            flightAttendants.push_back(passenger);
+            return true;}
+        
 
         
 
@@ -29,7 +37,7 @@ class Plane{
             return false;
         }
 
-
+       
         if (typeOfPassenger == "ECONOMY"){
 
             currentWeightEconomySegment += passenger->getHandLuggageWeight();
@@ -58,20 +66,22 @@ class Plane{
                 //если багаж не влезает, переносим его в эконом класс
                 if (passenger->getLuggageWeight() + currentWeightEconomySegment <= maxWeightEconomySegment){
                     currentWeightEconomySegment += passenger->getLuggageWeight();
-                    
+                    passengersBusiness.push_back(passenger);
+                    return true;
 
                 }
                 //если не помещается в эконом классе, то надо убрать чей-то багаж в эконом классе
                 else{
-                // int idWithMinWeight;
-                // for (int i = 0; i < passengersEconomy.size(); i++)
-                // {
-                //    auto tempPassenger = passengersEconomy[i];
-                //    if (tempPassenger->getLuggageWeight() 
-                // }
-                }
+                    //отсортируем сначала багаж по возрастанию  
+                    std::sort(passengersEconomy.begin(), passengersEconomy.end(), [](const std::shared_ptr<Unit>& a, const std::shared_ptr<Unit>& b) {
+                        return a->getLuggageWeight() > b->getLuggageWeight();
+                    });
+                
+                    
+
+
              }
-        }
+        }}
 
         else if (typeOfPassenger == "FIRST CLASS"){
             //добавляем его ручную кладь
@@ -93,26 +103,9 @@ class Plane{
     };
 
 
-    int getTotalLuggageWeight(){
+    int Plane::getTotalLuggageWeight(){
         return currentWeightEconomySegment + currentWeightBusinessSegment + currentWeightFirstClassSegment;
     }
 
 
-    public:
-
-    const int maxWeightEconomySegment;
-    const int maxWeightBusinessSegment;
-    const int maxWeightFirstClassSegment;
-
-    int currentWeightEconomySegment;
-    int currentWeightBusinessSegment;
-    int currentWeightFirstClassSegment;
-
-    std::vector<std::shared_ptr<Unit>> passengersEconomy;
-    std::vector<std::shared_ptr<Unit>> passengersBusiness;
-    std::vector<std::shared_ptr<Unit>> passengersFirstClass;
-
-    std::vector<std::shared_ptr<Unit>> flightAttendants;
-    std::vector<std::shared_ptr<Unit>> pilots;
-};
 

@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "passengers.hpp"
+
 
 class Plane {
 public:

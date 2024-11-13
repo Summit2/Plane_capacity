@@ -1,47 +1,54 @@
 #include "unit.hpp"
 #include "crew_members.hpp"
 
-class Pilot : public Unit {
 
-public:
-  Pilot(int id) : id(id) { };
+  Pilot::Pilot(int id) : id(id) { };
   
-   int getHandLuggageWeight() const override{
+   int Pilot::getHandLuggageWeight() const {
     return 0;
    };
-   int getLuggageWeight() const override{
+   int Pilot::getLuggageWeight() const {
     return 0;
    };
 
-  std::string getType() const override{
+  std::string Pilot::getType() const {
     return "PILOT";
   };
-  int getId() const override{
+  int Pilot::getId() const {
     return id;
   }
+  bool Pilot::canAddHandLuggage()  {
+        
+        return true;  
+    }
+  bool Pilot::canAddLuggage()  {
+       
+        return true;  
+  }
 
-private:
- int id;
-};
 
-class FlightAttendant : public Unit {
-public:
-  FlightAttendant(int id) : id(id) { };
+
+
+  FlightAttendant::FlightAttendant(int id) : id(id) { };
   
-   int getHandLuggageWeight() const override{
+   int FlightAttendant::getHandLuggageWeight() const {
     return 0;
    };
-   int getLuggageWeight() const override{
+   int FlightAttendant::getLuggageWeight() const {
     return 0;
    };
-   std::string getType() const override{
+   std::string FlightAttendant::getType() const {
     return "FLIGHT ATTENDANT";
   };
-  int getId() const override{
+  int FlightAttendant::getId() const {
     return id;
   }
+  bool FlightAttendant::canAddHandLuggage()  {
+        
+        return true;  
+    }
+  bool FlightAttendant::canAddLuggage()  {
+       
+        return true;  
+  }
 
-private:
- int id;
-
-};

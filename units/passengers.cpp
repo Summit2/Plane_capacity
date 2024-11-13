@@ -1,101 +1,82 @@
 #include <iostream>
 #include "unit.hpp"
+#include "passengers.hpp"
 
-class Economy : public Unit
-{
- public:
-  Economy(int id, int hand_weight, int luggage_weight) : id(id), HandLuggageWeight(hand_weight), LuggageWeight(luggage_weight) { };
 
-    bool canAddHandLuggage() override{
-        return false ? (HandLuggageWeight>10) : true;
+  Economy::Economy(int id, int hand_weight, int luggage_weight) : id(id), HandLuggageWeight(hand_weight), LuggageWeight(luggage_weight) { };
+
+    bool Economy::canAddHandLuggage() {
+        
+        return HandLuggageWeight<=10;
+        
     };
 
-    bool canAddLuggage() override {
+    bool Economy::canAddLuggage()  {
         return LuggageWeight<=24;
     }
-    int getHandLuggageWeight() const override {
+    int Economy::getHandLuggageWeight() const  {
         return HandLuggageWeight;
     }
-    int getLuggageWeight() const override {
+    int Economy::getLuggageWeight() const  {
         return LuggageWeight;
     }
 
-    std::string getType() const override{
+    std::string Economy::getType() const {
     return "ECONOMY";
   };
-  int getId() const override{
+  int Economy::getId() const {
     return id;
-  }
-
-    private:
-
-    int id;
-    int HandLuggageWeight;
-    int LuggageWeight;
-};
+  };
 
 
 
-class Business : public Unit {
-public:
-    Business(int id, int hand_weight, int luggage_weight) : id(id), HandLuggageWeight(hand_weight), LuggageWeight(luggage_weight) { };
 
-    bool canAddHandLuggage() override{
-        return false ? (HandLuggageWeight>24) : true;
+
+    Business::Business(int id, int hand_weight, int luggage_weight) : id(id), HandLuggageWeight(hand_weight), LuggageWeight(luggage_weight) { };
+
+    bool Business::canAddHandLuggage() {
+        return  (HandLuggageWeight<=24);
     };
 
-    bool canAddLuggage() override {
+    bool Business::canAddLuggage()  {
         return LuggageWeight<=40;
     }
-    int getHandLuggageWeight() const override {
+    int Business::getHandLuggageWeight() const  {
         return HandLuggageWeight;
     }
-    int getLuggageWeight() const override {
+    int Business::getLuggageWeight() const  {
         return LuggageWeight;
     }
 
-    int getId() const override{
+    int Business::getId() const {
     return id;
   }
 
-    std::string getType() const override{
+    std::string Business::getType() const {
     return "BUSINESS";
   };
-    private:
-
-    int id;
-    int HandLuggageWeight;
-    int LuggageWeight;
-};
 
 
-class FirstClass : public Unit {
-public:
-    FirstClass(int id, int hand_weight, int luggage_weight) : id(id), HandLuggageWeight(hand_weight), LuggageWeight(luggage_weight) { };
 
-    bool canAddHandLuggage() override{
-        return false ? (HandLuggageWeight>60) : true;
+    FirstClass::FirstClass(int id, int hand_weight, int luggage_weight) : id(id), HandLuggageWeight(hand_weight), LuggageWeight(luggage_weight) { };
+
+    bool FirstClass::canAddHandLuggage() {
+        return (HandLuggageWeight<=60);
     };
-    bool canAddLuggage() override {
+    bool FirstClass::canAddLuggage()  {
         return true;
     };
-    int getHandLuggageWeight() const override {
+    int FirstClass::getHandLuggageWeight() const  {
         return HandLuggageWeight;
     }
-    int getLuggageWeight() const override {
+    int FirstClass::getLuggageWeight() const  {
         return LuggageWeight;
     }
-    std::string getType() const override{
+    std::string FirstClass::getType() const {
     return "FIRST CLASS";
   };
-  int getId() const override{
+  int FirstClass::getId() const {
     return id;
   }
-    private:
-
-    int id;
-    int HandLuggageWeight;
-    int LuggageWeight;
-};
 
  

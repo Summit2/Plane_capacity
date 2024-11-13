@@ -9,6 +9,10 @@ public:
     int getLuggageWeight() const override;
     std::string getType() const override;
     int getId() const override;
+
+    bool canAddHandLuggage() override;
+    bool canAddLuggage() override;
+
 private:
     int id;
 };
@@ -21,6 +25,10 @@ public:
     std::string getType() const override;
     int getId() const override;
 
+    bool canAddHandLuggage() override;
+    bool canAddLuggage() override;
+
 private:
     int id;
 };
+
