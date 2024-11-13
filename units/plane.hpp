@@ -14,8 +14,9 @@ public:
     bool addPassenger(std::shared_ptr<Unit> passenger);
 
     int getTotalLuggageWeight();
+    void addLuggageToEconomy(std::shared_ptr<Unit> vip_passenger);
 
-public:
+private:
     const int maxWeightEconomySegment;
     const int maxWeightBusinessSegment;
     const int maxWeightFirstClassSegment;
@@ -30,5 +31,6 @@ public:
 
     std::vector<std::shared_ptr<Unit>> flightAttendants;
     std::vector<std::shared_ptr<Unit>> pilots;
+    
 };
 
