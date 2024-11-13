@@ -22,7 +22,8 @@ class Plane{
         if (typeOfPassenger == "FLIGHT ATTENDANT") flightAttendants.push_back(passenger);
         else if (typeOfPassenger == "PILOT") pilots.push_back(passenger);
 
-
+        
+        
         //проверяем, в норме ли у пассажира ручная кладь и багаж
         if (passenger->canAddHandLuggage()==false || passenger->canAddLuggage()==false){
             return false;
