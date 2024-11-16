@@ -87,7 +87,7 @@ int main(){
      testFirstClass();
 
 
-    std::cout<<"Tests passed"<<std::endl;
+    std::cout<<"Passengers tests passed"<<std::endl;
      
     return 0;
 }

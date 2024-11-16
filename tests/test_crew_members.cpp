@@ -33,7 +33,7 @@ int main(){
 
      testFlightAttendant();
 
-    std::cout<<"Tests passed"<<std::endl;
+    std::cout<<"Crew members tests passed"<<std::endl;
      
     return 0;
 }

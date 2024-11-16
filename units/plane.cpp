@@ -23,10 +23,12 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
         
         #ifdef test
         for(long unsigned int i=0; i < passengersEconomy.size(); ++i){
-             std::cout<<passengersEconomy[i]->getId()<<" "<< passengersEconomy[i]->getHandLuggageWeight()<<" " << passengersEconomy[i]->getLuggageWeight() <<std::endl;
+             std::cout<<passengersEconomy[i]->getId()<<" "<<
+              passengersEconomy[i]->getHandLuggageWeight()<<" " << passengersEconomy[i]->getLuggageWeight() <<std::endl;
                     }
         std::cout <<std::endl<< "Тип пассажира "<<typeOfPassenger<<std::endl;
         #endif
+
 
         // с пилотами и бортпроводниками все просто
         if (typeOfPassenger == "FLIGHT ATTENDANT" || typeOfPassenger == "PILOT") {
@@ -44,46 +46,70 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
        
         if (typeOfPassenger == "ECONOMY"){
 
-            currentWeightEconomySegment += passenger->getHandLuggageWeight();
-
-            if (currentWeightEconomySegment + passenger->getLuggageWeight() <= maxWeightEconomySegment){
+            //проверка, влезет ли ручная кладь
+            if (passenger->getHandLuggageWeight()+currentWeightEconomySegment<=maxWeightEconomySegment){
+                
+                currentWeightEconomySegment += passenger->getHandLuggageWeight();
+                //проверка, влезет ли багаж
+                if (currentWeightEconomySegment + passenger->getLuggageWeight() <= maxWeightEconomySegment){
                 currentWeightEconomySegment += passenger->getLuggageWeight();
-                passengersEconomy.push_back(passenger); 
-            }
-            else {
-                // ссаживаем его багаж
+                }
+                else {
+                // если багаж не влез, то ссаживаем багаж
                 std::cout << "!!PASSENGER’S LUGGAGE REMOVED FROM FLIGHT, ID = {" << passenger->getId() << "}!!"<<std::endl;
+            }
+            //добавляем пассажира
+            passengersEconomy.push_back(passenger); 
+            }
+            else{
+                //может быть случай, когда пассажир с ручной кладью не поместится
+                return false;
             }
         }
         else if (typeOfPassenger == "BUSINESS"){
-            //ручную кладь оставляем в бизнес классе
-            currentWeightBusinessSegment += passenger->getHandLuggageWeight();
 
-            if (currentWeightBusinessSegment + passenger->getLuggageWeight() <= maxWeightBusinessSegment){
+            //проверка, влезет ли ручная кладь
+            if (passenger->getHandLuggageWeight()+currentWeightBusinessSegment<=maxWeightBusinessSegment){
+                currentWeightBusinessSegment += passenger->getHandLuggageWeight();
+
+                //проверка, влезет ли багаж
+                if (currentWeightBusinessSegment + passenger->getLuggageWeight() <= maxWeightBusinessSegment){
                 currentWeightBusinessSegment += passenger->getLuggageWeight();
-   
-             }
-
-           //если не помещается в эконом классе, то надо убрать чей-то багаж в эконом классе
-            else{
-                addLuggageToEconomy(passenger); 
+                }
+                else {
+                // если багаж не влез, то мы гарантируем, что он влезет в отсек эконом класса
+                addLuggageToEconomy(passenger);
             }
-            passengersBusiness.push_back(passenger);
-            
+            //добавляем пассажира
+            passengersBusiness.push_back(passenger); 
+            }
+            else{
+                //может быть случай, когда пассажир с ручной кладью не поместится
+                return false;
+            }
              
         }
 
         else if (typeOfPassenger == "FIRST CLASS"){
-            //добавляем его ручную кладь
-            currentWeightBusinessSegment += passenger->getHandLuggageWeight();
+           //проверка, влезет ли ручная кладь
+            if (passenger->getHandLuggageWeight()+currentWeightFirstClassSegment<=maxWeightFirstClassSegment){
+                currentWeightFirstClassSegment += passenger->getHandLuggageWeight();
 
-            if (currentWeightFirstClassSegment + passenger->getLuggageWeight() <= maxWeightFirstClassSegment){
-                currentWeightFirstClassSegment += passenger->getLuggageWeight();                
+                //проверка, влезет ли багаж
+                if (currentWeightFirstClassSegment + passenger->getLuggageWeight() <= maxWeightFirstClassSegment){
+                currentWeightFirstClassSegment += passenger->getLuggageWeight();
+                }
+                else {
+                // если багаж не влез, то мы гарантируем, что он влезет в отсек эконом класса
+                addLuggageToEconomy(passenger);
             }
-            else {
-                    addLuggageToEconomy(passenger); 
+            //добавляем пассажира
+            passengersFirstClass.push_back(passenger); 
             }
-            passengersFirstClass.push_back(passenger);
+            else{
+                //может быть случай, когда пассажир с ручной кладью не поместится
+                return false;
+            }
         }
         
         return true;
@@ -94,16 +120,27 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
         return currentWeightEconomySegment + currentWeightBusinessSegment + currentWeightFirstClassSegment;
     }
 
+    int Plane::getCurrentLuggageWeightEconomy(){
+        return currentWeightEconomySegment;
+    }
+    int Plane::getCurrentLuggageWeightBusiness(){
+        return currentWeightBusinessSegment;
+    }
+    int Plane::getCurrentLuggageWeightFirstClass(){
+        return currentWeightFirstClassSegment;
+    }
 
 
 
-    void Plane::addLuggageToEconomy(std::shared_ptr<Unit> vip_passenger){
+
+    void Plane::addLuggageToEconomy(std::shared_ptr<Unit> passenger){
         //если багаж не влезает, переносим его в эконом класс
-                if (vip_passenger->getLuggageWeight() + currentWeightEconomySegment <= maxWeightEconomySegment){
-                    currentWeightEconomySegment += vip_passenger->getLuggageWeight();
+                if (passenger->getLuggageWeight() + currentWeightEconomySegment <= maxWeightEconomySegment){
+                    currentWeightEconomySegment += passenger->getLuggageWeight();
                     return;
                 }
-        //иначе начинаем чистить эконом класс
+
+        // если эконом класс забит, начинаем его чистить 
 
         //отсортируем сначала багаж по убыванию  
                     std::sort(passengersEconomy.begin(), passengersEconomy.end(), [](const std::shared_ptr<Unit>& a, const std::shared_ptr<Unit>& b) {
@@ -115,23 +152,33 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
                     int sumLuggage=0; //суммарный вес багажа экономщиков, который мы снимем
                     for (int i = passengersEconomy.size()-1; i >= 0; i--)
                     {
+                        //сначала проверим, может, мы смотрим пассажира, у которого мы уже ссадили багаж
+                        auto result{std::find(std::begin(idPassengersEconomyNoLuggage), std::end(idPassengersEconomyNoLuggage), passengersEconomy[i]->getId())};
+                        if (result != std::end(idPassengersEconomyNoLuggage)){
+                            //если нашли такого человека, то нам не надо заново ссаживать его багаж
+                            continue;
+                        }
+                        
+                        
                         sumLuggage+=passengersEconomy[i]->getLuggageWeight();
                         idLuggageOut.push_back(passengersEconomy[i]->getId());
-                        if (sumLuggage>=vip_passenger->getLuggageWeight()){
+                        if (sumLuggage>=passenger->getLuggageWeight()){
                             break;
                         }
                         
                        
                     }
                     
-                    //оповестим о том, что мы сняли багаж у таких пассажиров
+                    //запишем их в массив тех, у кого сняли багаж, чтобы случайно не ссадить их заново
+                    //и оповестим о том, что мы сняли багаж у таких пассажиров
                     for (size_t i = 0; i < idLuggageOut.size(); i++)
                     {
+                        idPassengersEconomyNoLuggage.push_back(idLuggageOut[i]);
                         std::cout << "!!PASSENGER’S LUGGAGE REMOVED FROM FLIGHT, ID = {" << idLuggageOut[i] << "}!!"<<std::endl;
                     }
                     //уберем этот вес из эконом класса
                     currentWeightEconomySegment-= sumLuggage;
 
                     //добавим багаж пассажира в общий вес эконом класса
-                    currentWeightEconomySegment += vip_passenger->getLuggageWeight();
+                    currentWeightEconomySegment += passenger->getLuggageWeight();
     }

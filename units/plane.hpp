@@ -16,6 +16,10 @@ public:
     int getTotalLuggageWeight();
     void addLuggageToEconomy(std::shared_ptr<Unit> vip_passenger);
 
+    int getCurrentLuggageWeightEconomy();
+    int getCurrentLuggageWeightBusiness();
+    int getCurrentLuggageWeightFirstClass();
+
 private:
     const int maxWeightEconomySegment;
     const int maxWeightBusinessSegment;
@@ -31,6 +35,9 @@ private:
 
     std::vector<std::shared_ptr<Unit>> flightAttendants;
     std::vector<std::shared_ptr<Unit>> pilots;
+
+    //id пассажиров, чей багаж был ссажен
+    std::vector<int> idPassengersEconomyNoLuggage;
     
 };
 

@@ -9,7 +9,7 @@
 
 int main(){
     // Сначала вводятся сегменты самолета
-    int economySegmentCapacity, businessSegmentCapacity, firstClassSegmentCapacity;
+    int economySegmentCapacity=0, businessSegmentCapacity=0, firstClassSegmentCapacity=0;
     for (int i = 0; i < 3; i++) {
         std::string tempSegmentName;
         int tempSegmentCapacity;
