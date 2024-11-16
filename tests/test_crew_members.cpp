@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 
+//g++ --coverage -g -O0 -fsanitize=address -std=c++2a     -Wall -Werror -Wextra units/plane.cpp     units/passengers.cpp units/crew_members.cpp     tests/test_plane.cpp -o test_plane
 
 void testPilot(){
     int id=0;

@@ -6,7 +6,7 @@
 #include <iostream>
 #include <algorithm>
 
-#define tes
+
 
 Plane::Plane(int max_weight_economy, int max_weight_business, int max_weight_firstclass)
     : maxWeightEconomySegment(max_weight_economy),
@@ -21,15 +21,9 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
         std::string typeOfPassenger = passenger->getType();
 
         
-        #ifdef test
-        for(long unsigned int i=0; i < passengersEconomy.size(); ++i){
-             std::cout<<passengersEconomy[i]->getId()<<" "<<
-              passengersEconomy[i]->getHandLuggageWeight()<<" " << passengersEconomy[i]->getLuggageWeight() <<std::endl;
-                    }
-        std::cout <<std::endl<< "Тип пассажира "<<typeOfPassenger<<std::endl;
-        #endif
+       
 
-
+        
         // с пилотами и бортпроводниками все просто
         if (typeOfPassenger == "FLIGHT ATTENDANT" || typeOfPassenger == "PILOT") {
             flightAttendants.push_back(passenger);
@@ -37,6 +31,7 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
         
 
         
+
 
         //проверяем, в норме ли у пассажира ручная кладь и багаж
         if (passenger->canAddHandLuggage()==false || passenger->canAddLuggage()==false){
@@ -57,6 +52,8 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
                 else {
                 // если багаж не влез, то ссаживаем багаж
                 std::cout << "!!PASSENGER’S LUGGAGE REMOVED FROM FLIGHT, ID = {" << passenger->getId() << "}!!"<<std::endl;
+                //добавляем пассажира в список тех, у кого мы убрали багаж
+                idPassengersEconomyNoLuggage.push_back(passenger->getId());
             }
             //добавляем пассажира
             passengersEconomy.push_back(passenger); 
@@ -173,6 +170,7 @@ bool Plane::addPassenger(std::shared_ptr<Unit> passenger) {
                     //и оповестим о том, что мы сняли багаж у таких пассажиров
                     for (size_t i = 0; i < idLuggageOut.size(); i++)
                     {
+                        // std::cout<<"Убираем багаж у "<<idLuggageOut[i]<<std::endl;
                         idPassengersEconomyNoLuggage.push_back(idLuggageOut[i]);
                         std::cout << "!!PASSENGER’S LUGGAGE REMOVED FROM FLIGHT, ID = {" << idLuggageOut[i] << "}!!"<<std::endl;
                     }

@@ -14,13 +14,16 @@ public:
     bool addPassenger(std::shared_ptr<Unit> passenger);
 
     int getTotalLuggageWeight();
-    void addLuggageToEconomy(std::shared_ptr<Unit> vip_passenger);
+    
 
     int getCurrentLuggageWeightEconomy();
     int getCurrentLuggageWeightBusiness();
     int getCurrentLuggageWeightFirstClass();
 
 private:
+
+    void addLuggageToEconomy(std::shared_ptr<Unit> vip_passenger);
+    
     const int maxWeightEconomySegment;
     const int maxWeightBusinessSegment;
     const int maxWeightFirstClassSegment;
