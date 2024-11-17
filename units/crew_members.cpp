@@ -1,8 +1,7 @@
 #include "crew_members.hpp"
 #include "unit.hpp"
 
-Pilot::Pilot(int id)
-    : id(id) {};
+Pilot::Pilot() {};
 
 int Pilot::getHandLuggageWeight() const
 {
@@ -17,10 +16,7 @@ std::string Pilot::getType() const
 {
     return "PILOT";
 };
-int Pilot::getId() const
-{
-    return id;
-}
+
 bool Pilot::canAddHandLuggage()
 {
 
@@ -32,8 +28,7 @@ bool Pilot::canAddLuggage()
     return true;
 }
 
-FlightAttendant::FlightAttendant(int id)
-    : id(id) {};
+FlightAttendant::FlightAttendant() {};
 
 int FlightAttendant::getHandLuggageWeight() const
 {
@@ -47,10 +42,7 @@ std::string FlightAttendant::getType() const
 {
     return "FLIGHT ATTENDANT";
 };
-int FlightAttendant::getId() const
-{
-    return id;
-}
+
 bool FlightAttendant::canAddHandLuggage()
 {
 

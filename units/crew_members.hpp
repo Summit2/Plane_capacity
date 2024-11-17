@@ -4,30 +4,22 @@
 
 class Pilot : public Unit {
 public:
-    Pilot(int id);
+    Pilot();
     int getHandLuggageWeight() const override;
     int getLuggageWeight() const override;
     std::string getType() const override;
-    int getId() const override;
 
     bool canAddHandLuggage() override;
     bool canAddLuggage() override;
-
-private:
-    int id;
 };
 
 class FlightAttendant : public Unit {
 public:
-    FlightAttendant(int id);
+    FlightAttendant();
     int getHandLuggageWeight() const override;
     int getLuggageWeight() const override;
     std::string getType() const override;
-    int getId() const override;
 
     bool canAddHandLuggage() override;
     bool canAddLuggage() override;
-
-private:
-    int id;
 };

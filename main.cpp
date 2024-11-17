@@ -7,6 +7,8 @@
 #include <vector>
 // g++ -std=c++2a -O2 -fsanitize=address -Wall -Werror -Wextra -Wno-maybe-uninitialized -I ./units/ main.cpp units/crew_members.cpp units/passengers.cpp units/plane.cpp -o main
 
+int Unit::idCounter = 0;
+
 int main()
 {
     // Сначала вводятся сегменты самолета
@@ -27,8 +29,6 @@ int main()
 
     Plane plane(economySegmentCapacity, businessSegmentCapacity, firstClassSegmentCapacity);
     // Plane plane(1000, 2000, 3000);
-    // Общий счетчик ID
-    int idCounter = 0;
 
     //     // Вводятся пилоты - 2 шт.
     for (int i = 0; i < 2; i++) {
@@ -36,27 +36,19 @@ int main()
         int tempHandLuggage, tempLuggage;
         std::cin >> tempLabel >> tempHandLuggage >> tempLuggage;
 
-        std::shared_ptr<Pilot> pilot = std::make_shared<Pilot>(idCounter);
+        std::shared_ptr<Pilot> pilot = std::make_shared<Pilot>();
         plane.addPassenger(pilot);
-
-        // std::cout << "Pilot ID: " << pilot->getId() << std::endl;
-        //
-        idCounter++;
     }
 
     // Вводятся бортпроводники - 6 шт.
     for (int i = 0; i < 6; i++) {
         std::string tempLabel;
         int tempHandLuggage, tempLuggage;
-        // std::cout<<"Введите бортпроводника:";
+
         std::cin >> tempLabel >> tempHandLuggage >> tempLuggage;
 
-        std::shared_ptr<FlightAttendant> attendant = std::make_shared<FlightAttendant>(idCounter);
+        std::shared_ptr<FlightAttendant> attendant = std::make_shared<FlightAttendant>();
         plane.addPassenger(attendant);
-
-        // std::cout << "Flight Attendant ID: " << attendant->getId() << std::endl;
-
-        idCounter++;
     }
 
     //Теперь вводятся пассажиры
@@ -65,7 +57,6 @@ int main()
     while (std::getline(std::cin, line)) {
 
         std::stringstream ss(line);
-
         std::string tempPassengerLabel;
         std::vector<int> allTempLuggage;
         int handLuggage1, handLuggage2 = 0, luggage1 = 0, luggage2 = 0;
@@ -118,21 +109,17 @@ int main()
         std::shared_ptr<Unit> tempPassenger;
 
         if (tempPassengerLabel == "ECONOMY")
-            tempPassenger = std::make_shared<Economy>(idCounter, finalHandLuggage, finalLuggage);
+            tempPassenger = std::make_shared<Economy>(finalHandLuggage, finalLuggage);
         else if (tempPassengerLabel == "BUSINESS")
-            tempPassenger = std::make_shared<Business>(idCounter, finalHandLuggage, finalLuggage);
+            tempPassenger = std::make_shared<Business>(finalHandLuggage, finalLuggage);
         else if (tempPassengerLabel == "FIRST_CLASS")
-            tempPassenger = std::make_shared<FirstClass>(idCounter, finalHandLuggage, finalLuggage);
-
-        // std::cout<<tempPassenger->getId()<<std::endl;
+            tempPassenger = std::make_shared<FirstClass>(finalHandLuggage, finalLuggage);
 
         bool canAddPassenger = plane.addPassenger(tempPassenger);
 
         if (canAddPassenger == false) {
             std::cout << "!!CANT REGISTER " << tempPassenger->getType() << " PASSENGER, ID = " << tempPassenger->getId() << "!!";
         }
-
-        idCounter++;
     }
 
     return 0;

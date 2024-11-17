@@ -4,14 +4,12 @@
 
 class Economy : public Unit {
 public:
-    Economy(int id, int hand_weight, int luggage_weight);
+    Economy(int hand_weight, int luggage_weight);
     bool canAddHandLuggage() override;
     bool canAddLuggage() override;
     int getHandLuggageWeight() const override;
     int getLuggageWeight() const override;
     std::string getType() const override;
-
-    int getId() const override;
 
 private:
     int id;
@@ -21,14 +19,13 @@ private:
 
 class Business : public Unit {
 public:
-    Business(int id, int hand_weight, int luggage_weight);
+    Business(int hand_weight, int luggage_weight);
 
     bool canAddHandLuggage() override;
     bool canAddLuggage() override;
     int getHandLuggageWeight() const override;
     int getLuggageWeight() const override;
     std::string getType() const override;
-    int getId() const override;
 
 private:
     int id;
@@ -38,13 +35,12 @@ private:
 
 class FirstClass : public Unit {
 public:
-    FirstClass(int id, int hand_weight, int luggage_weight);
+    FirstClass(int hand_weight, int luggage_weight);
     bool canAddHandLuggage() override;
     bool canAddLuggage() override;
     int getHandLuggageWeight() const override;
     int getLuggageWeight() const override;
     std::string getType() const override;
-    int getId() const override;
 
 private:
     int id;

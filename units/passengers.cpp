@@ -2,9 +2,8 @@
 #include "unit.hpp"
 #include <iostream>
 
-Economy::Economy(int id, int hand_weight, int luggage_weight)
-    : id(id)
-    , HandLuggageWeight(hand_weight)
+Economy::Economy(int hand_weight, int luggage_weight)
+    : HandLuggageWeight(hand_weight)
     , LuggageWeight(luggage_weight) {};
 
 bool Economy::canAddHandLuggage()
@@ -30,14 +29,9 @@ std::string Economy::getType() const
 {
     return "ECONOMY";
 };
-int Economy::getId() const
-{
-    return id;
-};
 
-Business::Business(int id, int hand_weight, int luggage_weight)
-    : id(id)
-    , HandLuggageWeight(hand_weight)
+Business::Business(int hand_weight, int luggage_weight)
+    : HandLuggageWeight(hand_weight)
     , LuggageWeight(luggage_weight) {};
 
 bool Business::canAddHandLuggage()
@@ -58,19 +52,13 @@ int Business::getLuggageWeight() const
     return LuggageWeight;
 }
 
-int Business::getId() const
-{
-    return id;
-}
-
 std::string Business::getType() const
 {
     return "BUSINESS";
 };
 
-FirstClass::FirstClass(int id, int hand_weight, int luggage_weight)
-    : id(id)
-    , HandLuggageWeight(hand_weight)
+FirstClass::FirstClass(int hand_weight, int luggage_weight)
+    : HandLuggageWeight(hand_weight)
     , LuggageWeight(luggage_weight) {};
 
 bool FirstClass::canAddHandLuggage()
@@ -93,7 +81,3 @@ std::string FirstClass::getType() const
 {
     return "FIRST CLASS";
 };
-int FirstClass::getId() const
-{
-    return id;
-}
