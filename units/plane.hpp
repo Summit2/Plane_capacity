@@ -1,11 +1,10 @@
 #pragma once
 
+#include "passengers.hpp"
 #include "unit.hpp"
-#include <vector>
 #include <memory>
 #include <string>
-#include "passengers.hpp"
-
+#include <vector>
 
 class Plane {
 public:
@@ -14,16 +13,14 @@ public:
     bool addPassenger(std::shared_ptr<Unit> passenger);
 
     int getTotalLuggageWeight();
-    
 
     int getCurrentLuggageWeightEconomy();
     int getCurrentLuggageWeightBusiness();
     int getCurrentLuggageWeightFirstClass();
 
 private:
-
     void addLuggageToEconomy(std::shared_ptr<Unit> vip_passenger);
-    
+
     const int maxWeightEconomySegment;
     const int maxWeightBusinessSegment;
     const int maxWeightFirstClassSegment;
@@ -41,6 +38,4 @@ private:
 
     //id пассажиров, чей багаж был ссажен
     std::vector<int> idPassengersEconomyNoLuggage;
-    
 };
-

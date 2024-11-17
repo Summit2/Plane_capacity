@@ -5,9 +5,7 @@
 //abstract class
 class Unit {
 
-
-    public:
-
+public:
     virtual int getId() const = 0;
     virtual int getHandLuggageWeight() const = 0;
     virtual int getLuggageWeight() const = 0;

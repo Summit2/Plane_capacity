@@ -12,6 +12,7 @@ public:
     std::string getType() const override;
 
     int getId() const override;
+
 private:
     int id;
     int HandLuggageWeight;
@@ -21,7 +22,7 @@ private:
 class Business : public Unit {
 public:
     Business(int id, int hand_weight, int luggage_weight);
-    
+
     bool canAddHandLuggage() override;
     bool canAddLuggage() override;
     int getHandLuggageWeight() const override;
